@@ -196,31 +196,67 @@ async def cut_shorts(request: LinkRequest, current_user: str = Depends(get_curre
             try: os.remove(f)
             except: pass
             
+   downloaded_v = None
     try:
-        # ვიყენებთ მუშა, საჯარო HTTP პროქსის ბლოკის ასავლელად
-        PROXY_URL = "http://45.152.188.243:3128"
+        PROXY_URL = os.environ.get("YTDLP_PROXY", "")
 
-        # 1. აუდიოს ბლოკი
-        with yt_dlp.YoutubeDL({
-            'format': 'bestaudio',
-            'outtmpl': audio_file,
+        ydl_common = {
             'ffmpeg_location': FFMPEG_PATH,
-            'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}],
-            'proxy': PROXY_URL,  # 👇 პროქსი მიდის აქ
-            'nocheckcertificate': True
-        }) as ydl:
-            ydl.download([url])
-
-        # 2. ვიდეოს ბლოკი
-        with yt_dlp.YoutubeDL({
-            'format': 'bestvideo[height=1080]',
-            'outtmpl': video_file,
-            'ffmpeg_location': FFMPEG_PATH,
-            'proxy': PROXY_URL,  # 👇 აქაც
-            'nocheckcertificate': True
-        }) as ydl:
-            ydl.download([url])
+            'nocheckcertificate': True,
+            # 🛑 ვუწერთ მკაცრ ტაიმაუტებს, რომ უსასრულოდ აღარ გაიჭედოს!
+            'socket_timeout': 15,
+            'retries': 3,
+            'http_chunk_size': 1048576, # 1MB ჩანკები სტაბილურობისთვის
             
+            # 🔥 იუთუბის "ტელევიზორის" კლიენტის სიმულაცია, რომელიც ჰოსტინგებზე არ იბლოკება!
+            'extractor_args': {
+                'youtube': {
+                    'player_client': ['tvhtml5'],
+                    'player_skip': ['webpage', 'configs']
+                }
+            }
+        }
+        if PROXY_URL:
+            ydl_common['proxy'] = PROXY_URL
+
+        # 1. აუდიოს ჩამოტვირთვა
+        audio_opts = dict(ydl_common)
+        audio_opts.update({
+            'format': 'bestaudio/best',
+            'outtmpl': audio_file,
+            'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}],
+        })
+        print(f"🚀 იწყება აუდიოს გადმოწერა ტელევიზორის კლიენტით: {url}")
+        with yt_dlp.YoutubeDL(audio_opts) as ydl:
+            ydl.download([url])
+
+        # 2. ვიდეოს ჩამოტვირთვა
+        video_opts = dict(ydl_common)
+        video_opts.update({
+            'format': 'bestvideo[height<=1080]/best[height<=1080]',
+            'outtmpl': video_file,
+        })
+        print(f"🚀 იწყება ვიდეოს გადმოწერა ტელევიზორის კლიენტით: {url}")
+        with yt_dlp.YoutubeDL(video_opts) as ydl:
+            ydl.download([url])
+
+        video_base = video_file.rsplit('.', 1)[0]
+        for f in os.listdir('.'):
+            if f.startswith(video_base) and not f.endswith('.mp3'):
+                downloaded_v = f
+                break
+
+        if not downloaded_v or not os.path.exists(audio_file):
+            raise RuntimeError("ფაილები ვერ შეიქმნა ჩამოტვირთვისას")
+
+    except Exception as e:
+        conn.close()
+        print(f"❌ დეტალური ერორი ტერმინალისთვის: {str(e)}")
+        for f in [audio_file, video_file, downloaded_v]:
+            if f and os.path.exists(f):
+                try: os.remove(f)
+                except OSError: pass
+        raise HTTPException(status_code=400, detail=f"ვიდეო ვერ ჩამოიტვირთა: {str(e)}")
         downloaded_v = None
         for f in os.listdir('.'):
             if f.startswith(video_file.split('.')[0]) and not f.endswith('.mp3'):
