@@ -194,9 +194,9 @@ async def cut_shorts(request: LinkRequest, current_user: str = Depends(get_curre
             except: pass
             
     try:
-        with yt_dlp.YoutubeDL({'format': 'bestaudio', 'outtmpl': audio_file, 'cookiefile':'cookies.txt', 'ffmpeg_location': FFMPEG_DIR, 'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}]}) as ydl:
+        with yt_dlp.YoutubeDL({'format': 'bestaudio', 'outtmpl': audio_file, 'cookiefile':cookies.txt, 'ffmpeg_location': FFMPEG_DIR, 'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}]}) as ydl:
             ydl.download([url])
-        with yt_dlp.YoutubeDL({'format': 'bestvideo[height=1080]', 'outtmpl': video_file,'cookiefile':'cookies.txt', 'ffmpeg_location': FFMPEG_DIR}) as ydl:
+        with yt_dlp.YoutubeDL({'format': 'bestvideo[height=1080]', 'outtmpl': video_file,'cookiefile':cookies.txt, 'ffmpeg_location': FFMPEG_DIR}) as ydl:
             ydl.download([url])
             
         downloaded_v = None
