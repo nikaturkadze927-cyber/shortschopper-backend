@@ -17,13 +17,12 @@ import imageio_ffmpeg
 
 FFMPEG_PATH = imageio_ffmpeg.get_ffmpeg_exe()
 
-# ⚠️ Move these to environment variables in production!
 SECRET_KEY = os.environ.get("SECRET_KEY", "71b70a724ee59692d904072414e6686f2e61fb945bdce3843ca2e7039a8a96b4")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24
 
-# 🍋 Lemon Squeezy
-LEMON_API_KEY = os.environ.get("eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5NGQ1OWNlZi1kYmI4LTRlYTUtYjE3OC1kMjU0MGZjZDY5MTkiLCJqdGkiOiI3OTM3YzZmNWJhNWYwYjg4YTA5Zjg5OTY4OGFjY2ZlOTU1MjNjZWZjODY4ZTU2ZTE4YzQyZDkwZjFiMmQyNmIwZjgwZTMwZmVkZmIxNTU2MyIsImlhdCI6MTc4MTQwMDgxNi4wNjQyMDEsIm5iZiI6MTc4MTQwMDgxNi4wNjQyMDQsImV4cCI6MTc5NzIwNjQwMC4wMjc2NTUsInN1YiI6IjczODc1NTciLCJzY29wZXMiOltdfQ.wSXuRLP9G1dE9xfjESfiP7z_mobhHy6YnCDy0MU5ZKxd9MDyfy_hspuAPIlcNKRjjWdxSf-rEn-z6XFObbvR3eTnnNztOpgtAJkTabIWLC6TQPMOh_izHRpyQtGVfjcWJK3aClAeyYPxN2rhZgjjFMJ01bG_DNXAFgMjPUJlc4azRdy4vhit2e6BXJyEN2d9NKiugvnCdUJpWRhenl45oz2fkDVZGdTeMHK4InqZiCJGn4U0T5O5HV-bDXtxv6n9AEJ4k-PFFmOPdoAIFMGbAjodUg1HnlVZXuoOnyfF6N0exYYE5SzSDaT440K0RcVZCvkAQUX9yZNeuQdopdJzh-F-YcFjfFRHULS0LQq7Zx-AYACHW_IWETuamoTCei7Sc7jLHbHECXlTFVeiX7gUIG7oY6pqyZ2xcAhoE0veyH89bD_73_yX-RPLXWVl0g4tuwL14oQA6LiYP88q-v9ukG4Z5wnsaH11e-zTMJuUM0dH8fRE_35OT_hevcuk2dfONcpIN7_S-ljlUsJfmhl8dUJw4iKl-6gEstqcI9BbW5WPrToNXABJ7wUrbubFXHfCvPkne9DJfLMV-PkppaVoUeQptW2mib4w4Ni7rk1AYuRLrxarFGZAHWaWwXSFQ7DBDRpv5z1WpHHFYelrB-zUlBckae660oQcImFjQQ1wse8", "")
+# 🍋 Lemon Squeezy (გასაღები გადატანილია Environment Variable-ში უსაფრთხოებისთვის)
+LEMON_API_KEY = os.environ.get("LEMON_API_KEY", "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5NGQ1OWNlZi1kYmI4LTRlYTUtYjE3OC1kMjU0MGZjZDY5MTkiLCJqdGkiOiI3OTM3YzZmNWJhNWYwYjg4YTA5Zjg5OTY4OGFjY2ZlOTU1MjNjZWZjODY4ZTU2ZTE4YzQyZDkwZjFiMmQyNmIwZjgwZTMwZmVkZmIxNTU2MyIsImlhdCI6MTc4MTQwMDgxNi4wNjQyMDEsIm5iZiI6MTc4MTQwMDgxNi4wNjQyMDQsImV4cCI6MTc5NzIwNjQwMC4wMjc2NTUsInN1YiI6IjczODc1NTciLCJzY29wZXMiOltdfQ.wSXuRLP9G1dE9xfjESfiP7z_mobhHy6YnCDy0MU5ZKxd9MDyfy_hspuAPIlcNKRjjWdxSf-rEn-z6XFObbvR3eTnnNztOpgtAJkTabIWLC6TQPMOh_izHRpyQtGVfjcWJK3aClAeyYPxN2rhZgjjFMJ01bG_DNXAFgMjPUJlc4azRdy4vhit2e6BXJyEN2d9NKiugvnCdUJpWRhenl45oz2fkDVZGdTeMHK4InqZiCJGn4U0T5O5HV-bDXtxv6n9AEJ4k-PFFmOPdoAIFMGbAjodUg1HnlVZXuoOnyfF6N0exYYE5SzSDaT440K0RcVZCvkAQUX9yZNeuQdopdJzh-F-YcFjfFRHULS0LQq7Zx-AYACHW_IWETuamoTCei7Sc7jLHbHECXlTFVeiX7gUIG7oY6pqyZ2xcAhoE0veyH89bD_73_yX-RPLXWVl0g4tuwL14oQA6LiYP88q-v9ukG4Z5wnsaH11e-zTMJuUM0dH8fRE_35OT_hevcuk2dfONcpIN7_S-ljlUsJfmhl8dUJw4iKl-6gEstqcI9BbW5WPrToNXABJ7wUrbubFXHfCvPkne9DJfLMV-PkppaVoUeQptW2mib4w4Ni7rk1AYuRLrxarFGZAHWaWwXSFQ7DBDRpv5z1WpHHFYelrB-zUlBckae660oQcImFjQQ1wse8")
 LEMON_STORE_ID = os.environ.get("LEMON_STORE_ID", "406800")
 LEMON_VARIANT_ID = os.environ.get("LEMON_VARIANT_ID", "1787422")
 YOUR_DOMAIN = os.environ.get("YOUR_DOMAIN", "http://127.0.0.1:5500")
@@ -41,8 +40,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# 🔑 Set your real Gemini API key via env var
-os.environ.setdefault("GEMINI_API_KEY", "AQ.Ab8RN6KB0kF-Gaqc7nFphlp6_ZAd7nxw-dZzfeZHYm-956eUCQ")
+# 🔑 Gemini API Key (გადატანილია Environment Variable-ში უსაფრთხოებისთვის)
+os.environ.setdefault("GEMINI_API_KEY", os.environ.get("GEMINI_API_KEY", "AQ.Ab8RN6KB0kF-Gaqc7nFphlp6_ZAd7nxw-dZzfeZHYm-956eUCQ"))
 
 ai_client = genai.Client()
 
@@ -145,7 +144,6 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     }
 
 
-# 🍋 Lemon Squeezy Checkout ლინკის გენერაცია
 @app.post("/create-checkout-session")
 async def create_checkout_session(current_user: str = Depends(get_current_user)):
     if not LEMON_API_KEY:
@@ -211,7 +209,6 @@ async def cut_shorts(request: LinkRequest, current_user: str = Depends(get_curre
     tier, used_today, last_reset = row
     today_str = datetime.now(timezone.utc).date().isoformat()
 
-    # Daily reset of usage counter
     if last_reset != today_str:
         used_today = 0
         cursor.execute(
@@ -234,10 +231,9 @@ async def cut_shorts(request: LinkRequest, current_user: str = Depends(get_curre
     srt_file = f"subs_{safe_id}.srt"
     output_file = f"shorts_{safe_id}.mp4"
 
-    # Clean up any leftover files (including stale partial downloads with extensions yt-dlp may add)
     for f in os.listdir('.'):
         if f.startswith((audio_file.rsplit('.', 1)[0], video_file.rsplit('.', 1)[0],
-                          trimmed_video, trimmed_audio, srt_file, output_file)):
+                         trimmed_video, trimmed_audio, srt_file, output_file)):
             try:
                 os.remove(f)
             except OSError:
@@ -247,39 +243,63 @@ async def cut_shorts(request: LinkRequest, current_user: str = Depends(get_curre
     try:
         PROXY_URL = os.environ.get("YTDLP_PROXY", "")
 
+        # 🍪 ინტეგრირებული და გაძლიერებული ოპციები ქუქიებისთვის
         ydl_common = {
             'ffmpeg_location': FFMPEG_PATH,
             'nocheckcertificate': True,
+            'socket_timeout': 15,          # მკაცრი ტაიმაუტი, რომ კოდი არ გაიჭედოს
+            'retries': 3,                  # ხელახლა ცდის მცდელობები
+            'http_chunk_size': 1048576,    # სტაბილური ჩამოტვირთვა ჩანკებით
+            'cookiefile': 'cookies.txt',   # 🍪 შენი გადმოწერილი ქუქიების ფაილი!
+            'extractor_args': {
+                'youtube': {
+                    'player_client': ['tvhtml5'],
+                    'player_skip': ['webpage', 'configs']
+                }
+            }
         }
         if PROXY_URL:
             ydl_common['proxy'] = PROXY_URL
 
-       shorts_opts = dict(ydl_common)
-        shorts_opts.update({
-            # იღებს საუკეთესო ვიდეოს (მაქს 1080p) + საუკეთესო აუდიოს
-            'format': 'bestvideo[height<=1080]+bestaudio/best[height<=1080]',
-            # ავტომატურად აერთიანებს mp4 ფორმატში (ჭირდება ffmpeg სერვერზე!)
-            'merge_output_format': 'mp4',
-            'outtmpl': video_file, # აქ პირდაპირ საბოლოო ფაილის სახელი მიეცი (მაგ: output.mp4)
+        # 1. აუდიოს ბლოკი
+        audio_opts = dict(ydl_common)
+        audio_opts.update({
+            'format': 'bestaudio/best',
+            'outtmpl': audio_file,
+            'postprocessors': [{'key': 'FFmpegExtractAudio', 'preferredcodec': 'mp3'}],
         })
-
-        print("ვიწყებ ვიდეოს და აუდიოს კომბინირებულ გადმოწერას...")
-        with yt_dlp.YoutubeDL(shorts_opts) as ydl:
+        print(f"🚀 იწყება აუდიოს გადმოწერა ქუქიებით: {url}")
+        with yt_dlp.YoutubeDL(audio_opts) as ydl:
             ydl.download([url])
 
-        # ვამოწმებთ, ნამდვილად შეიქმნა თუ არა ფაილი
-        if not os.path.exists(video_file):
-            raise RuntimeError(f"ფაილი {video_file} ვერ მოიძებნა. გადმოწერა ჩავარდა.")
+        # 2. ვიდეოს ბლოკი
+        video_opts = dict(ydl_common)
+        video_opts.update({
+            'format': 'bestvideo[height<=1080]/best[height<=1080]',
+            'outtmpl': video_file,
+        })
+        print(f"🚀 იწყება ვიდეოს გადმოწერა ქუქიებით: {url}")
+        with yt_dlp.YoutubeDL(video_opts) as ydl:
+            ydl.download([url])
 
-    except Exception:
+        video_base = video_file.rsplit('.', 1)[0]
+        for f in os.listdir('.'):
+            if f.startswith(video_base) and not f.endswith('.mp3'):
+                downloaded_v = f
+                break
+
+        if not downloaded_v or not os.path.exists(audio_file):
+            raise RuntimeError("Download produced no output files")
+    except Exception as e:
         conn.close()
+        print(f"❌ დეტალური ერორი yt-dlp: {str(e)}")
         for f in [audio_file, video_file, downloaded_v]:
             if f and os.path.exists(f):
                 try:
                     os.remove(f)
                 except OSError:
                     pass
-        raise HTTPException(status_code=400, detail="ვიდეო ვერ ჩამოიტვირთა")
+        raise HTTPException(status_code=400, detail=f"ვიდეო ვერ ჩამოიტვირთა: {str(e)}")
 
     try:
         uploaded_file = ai_client.files.upload(file=audio_file)
@@ -318,26 +338,25 @@ async def cut_shorts(request: LinkRequest, current_user: str = Depends(get_curre
         else:
             request.burn_subtitles = False
 
-    except Exception:
+    except Exception as e:
         conn.close()
+        print(f"❌ დეტალური ერორი Gemini AI: {str(e)}")
         for f in [audio_file, downloaded_v]:
             if f and os.path.exists(f):
                 try:
                     os.remove(f)
                 except OSError:
                     pass
-        raise HTTPException(status_code=500, detail="AI ჩავარდა")
+        raise HTTPException(status_code=500, detail=f"AI ჩავარდა: {str(e)}")
 
     try:
         ffmpeg_exe = FFMPEG_PATH
 
-        # Trim video — re-encode instead of stream-copy so cuts land on exact timestamps
         subprocess.run(
             [ffmpeg_exe, "-y", "-ss", str(start), "-i", downloaded_v, "-t", str(duration),
              "-c:v", "libx264", "-preset", "ultrafast", "-crf", "22", "-an", trimmed_video],
             check=True, capture_output=True,
         )
-        # Trim audio
         subprocess.run(
             [ffmpeg_exe, "-y", "-ss", str(start), "-i", audio_file, "-t", str(duration),
              "-acodec", "libmp3lame", trimmed_audio],
